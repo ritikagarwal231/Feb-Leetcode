@@ -1,0 +1,51 @@
+/*
+ * Below is the interface for Iterator, which is already defined for you.
+ * **DO NOT** modify the interface for Iterator.
+ *
+ *  class Iterator {
+ *		struct Data;
+ * 		Data* data;
+ *		Iterator(const vector<int>& nums);
+ * 		Iterator(const Iterator& iter);
+ *
+ * 		// Returns the next element in the iteration.
+ *		int next();
+ *
+ *		// Returns true if the iteration has more elements.
+ *		bool hasNext() const;
+ *	};
+ */
+
+class PeekingIterator : public Iterator {
+    int n;
+    bool b;
+    public: 
+	PeekingIterator(const vector<int>& nums) : Iterator(nums), b(false), n(0) {
+	    // Initialize any member here.
+	    // **DO NOT** save a copy of nums and manipulate it directly.
+	    // You should only use the Iterator interface methods.
+	    b=Iterator::hasNext(); // store current has_next value
+	    if (b)
+            n = Iterator::next(); 
+    };
+	
+	int peek() {
+        return this->n;
+	}
+	int next() {
+        int temp = n;
+        
+        b=Iterator::hasNext(); 
+	    if (b) 
+            n = Iterator::next();
+        
+	    return temp;
+	}
+	
+	bool hasNext() const {
+        if(this->b)
+            return true;
+        else
+	        return Iterator::hasNext();
+    }
+};
